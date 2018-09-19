@@ -21,45 +21,91 @@
   <meta charset=utf-8 />
   <title>Dashboard</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
-  <script src="cytoscape.min.js"></script>
+  <!--  <script src="cytoscape.min.js"></script> -->
+  <script src="cytoscape.min1.js"></script>
+  <!-- 
+  <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script> -->
   <script src="https://rawgit.com/tgdwyer/WebCola/master/WebCola/cola.min.js"></script>
   <script src="https://rawgit.com/cytoscape/cytoscape.js-cola/master/cytoscape-cola.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>
+  <script src="cytoscape-qtip.js"></script>
+
+  <script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
+  <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.5.0/cytoscape-dagre.js"></script>
+  <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-cola/1.6.0/cola.js"></script>
+  <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-cola/1.6.0/cytoscape-cola.js"></script>
+
+
+
+  <script src="https://unpkg.com/klayjs@0.4.1/klay.js"></script>
+  <script src="cytoscape-klay.js"></script>
+  <script src="elk.js"></script>
+
+
+  <!-- COSE BILKENT -->
+  <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-cose-bilkent/1.6.5/cytoscape-cose-bilkent.js"></script>
+  <!-- 
+  <script src="cytoscape-graphml.js"></script> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/elkjs@0.3.0/lib/elk.bundled.js"></script>
+  <script src="cytoscape-elk.js"></script>
 </head>
 
 <body>
   <div class="container-fluid">
     <row>
-      <div class="col-sm-12">
-        <div class="panel panel-primary">
-          <div class="panel-heading">Dashboard</div>
-          <div class="panel-body">
-            <br>
-            <div id="cy-container">
-              <div id="cy"></div>
-            </div>
-          </div>
-        </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Dashboard</div>
       </div>
-      <!--  <div class="col-sm-1">
+      <div id="cy"></div>
+      <!--   <div class="col-sm-1">
         <br>
         <div class="mt-2">
           <button class="btn btn-success mt-2" onclick="save()">Save</button>
+          <button onclick="reRender()">Render</button>
         </div>
       </div> -->
     </row>
   </div>
+
   <!-- Load application code at the end to ensure DOM is loaded -->
-  <script src="cola.min.js"></script>
+  <!--   <script src="cola.min.js"></script> -->
   <script src="code.js"></script>
+  <script>
+  /*  function reRender() {
+      console.log("render")
+      cy.forceRender();
+      cy.resize();
+
+      //   console.log(cy.layout({ layoutOptions }))
+
+      /*   var layout = cy.layout({
+           name: 'random'
+         });
+      var layout = cy.layout(layoutOptions);
+
+      layout.run();
+    }*/
+  </script>
 </body>
 <style>
   .panel-body {
     height: 600px;
   }
 
-  #cy-container {
-    margin: 30px;
+
+  .cy-container {
+    height: 700px;
+  }
+
+  #cy {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 </style>
 
