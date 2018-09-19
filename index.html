@@ -82,8 +82,36 @@
       let cyJson = localStorage.getItem("cyJson");
       if (null != cyJson) {
         cy.json(JSON.parse(cyJson));
-        qtip();
+        initQtip();
       }
+    }
+
+    function initQtip() {
+      console.log("Qtip Initialized");
+      // just use the regular qtip api but on cy elements
+      cy.edges().qtip({
+        content: {
+          title: function () {
+            return this.data("label");
+          },
+          text: function () {
+            return " Status is " + this.data("status");
+          },
+          button: "Close"
+        },
+        position: {
+          my: "top center",
+          at: "bottom center"
+        },
+        style: {
+          classes: "qtip-rounded qtip-shadow",
+          // width: 600,
+          tip: {
+            width: 16,
+            height: 8
+          }
+        }
+      });
     }
   </script>
 </body>

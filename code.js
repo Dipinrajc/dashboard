@@ -376,7 +376,7 @@ var cy = (window.cy = cytoscape({
   },
   ready: function() {
     window.cy = this;
-    qtip();
+    initQtip();
   }
 }));
 
@@ -392,7 +392,13 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function qtip() {
+function reRender() {
+  console.log("render");
+  let cyLayout = cy.layout(options);
+  cyLayout.run();
+}
+
+function initQtip() {
   console.log("Qtip Initialized");
   // just use the regular qtip api but on cy elements
   cy.edges().qtip({
@@ -418,10 +424,4 @@ function qtip() {
       }
     }
   });
-}
-
-function reRender() {
-  console.log("render");
-  let cyLayout = cy.layout(options);
-  cyLayout.run();
 }
