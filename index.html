@@ -82,6 +82,7 @@
       let cyJson = localStorage.getItem("cyJson");
       if (null != cyJson) {
         cy.json(JSON.parse(cyJson));
+        qtip();
       }
     }
   </script>
@@ -90,7 +91,6 @@
   .panel-body {
     height: 600px;
   }
-
 
   .cy-container {
     height: 700px;

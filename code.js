@@ -376,6 +376,7 @@ var cy = (window.cy = cytoscape({
   },
   ready: function() {
     window.cy = this;
+    qtip();
   }
 }));
 
@@ -391,30 +392,33 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// just use the regular qtip api but on cy elements
-cy.edges().qtip({
-  content: {
-    title: function() {
-      return this.data("label");
+function qtip() {
+  console.log("Qtip Initialized");
+  // just use the regular qtip api but on cy elements
+  cy.edges().qtip({
+    content: {
+      title: function() {
+        return this.data("label");
+      },
+      text: function() {
+        return " Status is " + this.data("status");
+      },
+      button: "Close"
     },
-    text: function() {
-      return " Status is " + this.data("status");
+    position: {
+      my: "top center",
+      at: "bottom center"
     },
-    button: "Close"
-  },
-  position: {
-    my: "top center",
-    at: "bottom center"
-  },
-  style: {
-    classes: "qtip-rounded qtip-shadow",
-    // width: 600,
-    tip: {
-      width: 16,
-      height: 8
+    style: {
+      classes: "qtip-rounded qtip-shadow",
+      // width: 600,
+      tip: {
+        width: 16,
+        height: 8
+      }
     }
-  }
-});
+  });
+}
 
 function reRender() {
   console.log("render");
