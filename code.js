@@ -409,3 +409,16 @@ function reRender() {
   let cyLayout = cy.layout(options);
   cyLayout.run();
 }
+
+function save() {
+  console.log("save");
+  localStorage.setItem("cyJson", JSON.stringify(cy.json()));
+}
+
+function load() {
+  console.log("load");
+  let cyJson = localStorage.getItem("cyJson");
+  if (null != cyJson) {
+    cy.json(JSON.parse(cyJson));
+  }
+}
