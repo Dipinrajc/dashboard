@@ -63,6 +63,7 @@
         <div class="mt-2">
           <button class="btn btn-success mt-2" onclick="save()">Save</button>
           <button class="btn btn-primary mt-2" onclick="load()">Load</button>
+          <button class="btn btn-primary mt-2" onclick="toggleEdit()">Toggle Edit</button>
         </div>
       </div>
     </row>
@@ -96,8 +97,7 @@
           },
           text: function () {
             return " Status is " + this.data("status");
-          },
-          button: "Close"
+          }
         },
         position: {
           my: "top center",
@@ -113,6 +113,13 @@
         }
       });
     }
+
+    function toggleEdit() {
+      console.log("toggleEdit");
+      window.grabbable = !window.grabbable;
+      cy.autoungrabify(!window.grabbable)
+    }
+
   </script>
 </body>
 <style>
