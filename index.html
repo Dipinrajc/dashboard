@@ -17,6 +17,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
   <script src="data.js"></script>
+  <script src="newdata.js"></script>
+  <script>
+    window.data = [];
+    window.data = oldData;
+  </script>
+
   <link href="style.css" rel="stylesheet" />
   <meta charset=utf-8 />
   <title>Dashboard</title>
@@ -64,6 +70,8 @@
           <button class="btn btn-success mt-2" onclick="save()">Save</button>
           <button class="btn btn-primary mt-2" onclick="load()">Load</button>
           <button class="btn btn-primary mt-2" onclick="toggleEdit()">Toggle Edit</button>
+          <button class="btn btn-warning mt-2" onclick="changeData()">Change Data</button>
+          <button class="btn btn-primary mt-2" onclick="changeDataAndLoad()">Change Data & Load</button>
         </div>
       </div>
     </row>
@@ -78,13 +86,114 @@
       localStorage.setItem("cyJson", JSON.stringify(cy.json()));
     }
 
+    function changeData() {
+      console.log("change data");
+      if (window.data == newData) {
+        window.data = oldData;
+      } else {
+        window.data = newData;
+      }
+      initDashBoard();
+    }
+
+    function changeDataAndLoad() {
+      console.log("change data and load saved layout");
+      changeData();
+      load();
+    }
+
+    function comparer(otherArray) {
+      //console.log(otherArray)
+      return function (current) {
+        return otherArray.filter(function (other) {
+          return other.data ? other.data.id == current.id : other.id == current.data.id;
+        }).length == 0;
+      }
+    }
+
     function load() {
       console.log("load");
       let cyJson = localStorage.getItem("cyJson");
       if (null != cyJson) {
+        let savedData = JSON.parse(cyJson);
+        //console.log(JSON.parse(cyJson))
         cy.json(JSON.parse(cyJson));
+        if (window.data != null) {
+          let savedNodes = savedData.elements.nodes;
+          let originalNodes = window.data.systems;
+          //console.log("Saved Nodes ", savedNodes);
+          //console.log("Orginal Nodes ", originalNodes);
+          //console.log("Checking for node changes");
+          var nodesOnlyInSavedData = savedNodes.filter(comparer(originalNodes));
+          var nodesOnlyInOriginalData = originalNodes.filter(comparer(savedNodes));
+          //console.log("New Nodes ", nodesOnlyInOriginalData);
+          addNode(nodesOnlyInOriginalData);
+          //console.log("Removed Nodes ", nodesOnlyInSavedData);
+          removeNode(nodesOnlyInSavedData);
+
+
+          let savedEdges = savedData.elements.edges;
+          let originalEdges = window.data.systemlinks;
+          // console.log("Saved Edges ", savedEdges);
+          // console.log("Orginal Edges ", originalEdges);
+          // console.log("Checking for edge changes");
+          var edgesOnlyInSavedData = savedEdges.filter(comparer(originalEdges));
+          var edgsesOnlyInOriginalData = originalEdges.filter(comparer(savedEdges));
+          // console.log("New Edges ", edgsesOnlyInOriginalData);
+          addEdge(edgsesOnlyInOriginalData);
+          //console.log("Removed Edges ", edgesOnlyInSavedData);
+          removeEdge(edgesOnlyInSavedData);
+        }
         initQtip();
       }
+    }
+
+
+    function addNode(newNodes) {
+      newNodes.forEach(node => {
+        let nodeData = {};
+        nodeData.data = {};
+        nodeData.data.id = node.id;
+        nodeData.data.name = node.name;
+        nodeData.classes = node.type;
+        nodeData.group = "nodes";
+        nodeData.position = { x: 300, y: 100 }
+        cy.add(nodeData)
+        var j = cy.$(node.id);
+        cy.center(j);
+      });
+    }
+
+    function removeNode(oldNodes) {
+      oldNodes.forEach(node => {
+        var j = cy.$id(node.data.id);
+        cy.remove(j);
+      });
+    }
+
+
+    function addEdge(newEdges) {
+      newEdges.forEach(edge => {
+        let edgeData = {};
+        edgeData.data = {};
+        edgeData.data.id = edge.id;
+        edgeData.data.source = edge.source;
+        edgeData.data.target = edge.target;
+        edgeData.data.label = edge.label;
+        edgeData.data.status = edge.status;
+        edgeData.classes = edge.type;
+        edgeData.classes += " " + edge.status;
+        edgeData.group = "edges";
+        cy.add(edgeData)
+      });
+    }
+
+
+    function removeEdge(oldEdges) {
+      oldEdges.forEach(edge => {
+        var j = cy.$id(edge.data.id);
+        cy.remove(j);
+      });
     }
 
     function initQtip() {
@@ -120,6 +229,7 @@
       cy.autoungrabify(!window.grabbable)
     }
 
+    initDashBoard();
   </script>
 </body>
 <style>
