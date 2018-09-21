@@ -225,14 +225,14 @@ function initDashBoard() {
         opacity: 0.666,
         //  width: "mapData(strength, 70, 100, 2, 6)",
         "target-arrow-shape": "triangle",
-        // "source-arrow-shape": "circle",
+        "source-arrow-shape": "circle",
         // "line-color": "data(faveColor)",
-        // "source-arrow-color": "data(faveColor)",
-        //  "target-arrow-color": "data(faveColor)",
+        "source-arrow-color": getColor,
+        "target-arrow-color": getColor,
         //"text-margin-y": 10,
-        content: "data(label)",
-        "text-margin-y": 10,
-        "text-margin-x": 10,
+        label: "data(label)",
+        "text-margin-y": -10,
+        "text-margin-x": -10,
         "font-size": 10,
         color: "#0F0E0E",
         "edge-text-rotation": "autorotate",
@@ -244,13 +244,11 @@ function initDashBoard() {
       })
       .selector("edge.dashed")
       .css({
-        "line-style": "dashed",
-        "target-arrow-shape": "triangle"
+        "line-style": "dashed"
       })
       .selector("edge.dotted")
       .css({
-        "line-style": "dotted",
-        "target-arrow-shape": "triangle"
+        "line-style": "dotted"
       })
       .selector(".faded")
       .css({
@@ -259,34 +257,24 @@ function initDashBoard() {
       })
       .selector("edge.existing")
       .css({
-        "line-color": "grey",
-        "source-arrow-color": "grey",
-        "target-arrow-color": "grey"
+        "line-color": "grey"
       })
       .selector("edge.pointtopoint")
       .css({
-        "line-color": "#F5AF0E",
-        "source-arrow-color": "yellow",
-        "target-arrow-color": "yellow"
+        "line-color": "#F5AF0E"
       })
       .selector("edge.nearrealtime")
       .css({
         "line-color": "green",
-        "source-arrow-color": "green",
-        "target-arrow-color": "green",
         "line-style": "dashed"
       })
       .selector("edge.realtime")
       .css({
-        "line-color": "blue",
-        "source-arrow-color": "blue",
-        "target-arrow-color": "blue"
+        "line-color": "blue"
       })
       .selector("edge.batch")
       .css({
         "line-color": "orange",
-        "source-arrow-color": "orange",
-        "target-arrow-color": "orange",
         "line-style": "dashed"
       })
       .selector("edge.active")
@@ -363,4 +351,15 @@ function initQtip() {
       }
     }
   });
+}
+
+function getColor(ele) {
+  let status = ele.data("status");
+  if (status == "active") {
+    return "green";
+  } else if (status == "failure") {
+    return "red";
+  } else if (status == "warning") {
+    return "orange";
+  }
 }
