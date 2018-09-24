@@ -28,7 +28,9 @@
   <title>Dashboard</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
   <!--  <script src="cytoscape.min.js"></script> -->
-  <script src="cytoscape.min1.js"></script>
+  <!-- 
+  <script src="cytoscape.min1.js"></script> -->
+  <script src="cytoscape.js"></script>
   <!-- 
   <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script> -->
   <script src="https://rawgit.com/tgdwyer/WebCola/master/WebCola/cola.min.js"></script>
@@ -55,32 +57,88 @@
 
   <script src="https://cdn.jsdelivr.net/npm/elkjs@0.3.0/lib/elk.bundled.js"></script>
   <script src="cytoscape-elk.js"></script>
+  <script src="https://unpkg.com/popper.js"></script>
+
+
+  <script src="https://unpkg.com/tippy.js@2.5/dist/tippy.all.js"></script>
+  <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+  <!-- 
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@2.0.9/dist/tippy.css" /> -->
+  <!-- 
+  <script src="tippy.js"></script>
+  <link rel="stylesheet" href="tippy.css" /> -->
+  <script src="cytoscape-popper.js"></script>
+  <script src="cytoscape-euler.js"></script>
+
+
+  <style>
+    .tippy-tooltip.yellow-theme {
+      /* Your styling here. Example:*/
+      background-color: aqua !important;
+      border: 1px solid aqua;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 10px;
+      color: #fff;
+      line-height: 15px;
+      text-align: center;
+      left: 0;
+    }
+
+    .tippy-tooltip.yellow-theme [x-circle],
+    .tippy-backdrop {
+      /* Your styling here. Example: */
+      background-color: aqua !important;
+    }
+
+
+    .tippy-tooltip.yellow-theme .tippy-tooltip-content {
+      /* Your styling here. Example: */
+      color: black;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container-fluid">
     <row>
-      <div class="panel panel-primary">
-        <div class="panel-heading">Dashboard</div>
-      </div>
-      <div id="cy"></div>
-      <div class="col-sm-1">
-        <br>
-        <div class="mt-2">
-          <button class="btn btn-success mt-2" onclick="save()">Save</button>
-          <button class="btn btn-primary mt-2" onclick="load()">Load</button>
-          <button class="btn btn-primary mt-2" onclick="toggleEdit()">Toggle Edit</button>
-          <button class="btn btn-warning mt-2" onclick="changeData()">Change Data</button>
-          <button class="btn btn-primary mt-2" onclick="changeDataAndLoad()">Change Data & Load</button>
-        </div>
+      <div class="col-md-12 buttons">
+        <button id="fit" class="btn btn-success">Fit</button>
+        <button id="layout" class="btn btn-success">Layout</button>
+        <button class="btn btn-success mt-2" onclick="save()">Save</button>
+        <button class="btn btn-primary mt-2" onclick="load()">Load</button>
+        <button class="btn btn-primary mt-2" onclick="toggleEdit()">Toggle Edit</button>
+        <button class="btn btn-warning mt-2" onclick="changeData()">Change Data</button>
+        <button class="btn btn-primary mt-2" onclick="changeDataAndLoad()">Change Data & Load</button>
       </div>
     </row>
   </div>
+  <div id="cy-container">
+    <div id="cy"></div>
+  </div>
+  <!-- 
+
+    <div id="tippy-template" style="display: none;" class="tippy-div">
+      <p>Fun <strong>non-interactive HTML</strong> here</p>
+    </div> -->
 
   <!-- Load application code at the end to ensure DOM is loaded -->
   <!--   <script src="cola.min.js"></script> -->
   <script src="code.js"></script>
   <script>
+
+
+    $("#fit").click(function () {
+      cy.fit();
+    });
+
+    $("#layout").click(function () {
+      cy.layout({
+        name: 'dagre'
+      });
+    });
+
     function save() {
       console.log("save");
       localStorage.setItem("cyJson", JSON.stringify(cy.json()));
@@ -233,20 +291,26 @@
   </script>
 </body>
 <style>
-  .panel-body {
-    height: 600px;
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
-  .cy-container {
-    height: 700px;
+  #cy-container {
+    width: 100%;
+    height: 100%;
   }
 
   #cy {
-    height: 100%;
     width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
+    height: 100%;
+  }
+
+  .buttons {
+    z-index: 9999999;
   }
 </style>
 

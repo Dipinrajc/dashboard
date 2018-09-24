@@ -3,17 +3,42 @@ var oldData = {
     {
       id: "sfccs",
       name: "SFCC E-Commerce Platform - Staging",
-      type: "cloud"
+      type: "cloud",
+      imageUrl: "https://www.demandware.com/img/icons/png/cc-share.png"
     },
     {
       id: "sfccl",
       name: "SFCC E-Commerce Platform - Live",
-      type: "cloud"
+      type: "cloud",
+      imageUrl: "https://www.demandware.com/img/icons/png/cc-share.png"
     },
-    { id: "ibm", name: "IBM Order Management", type: "cloud" },
-    { id: "apim", name: "Akeneo PIM", type: "cloud" },
-    { id: "sapcar", name: "SAP CAR", type: "onpremise" },
-    { id: "sapisr", name: "SAP IS Retail", type: "onpremise" },
+    {
+      id: "ibm",
+      name: "IBM Order Management",
+      type: "cloud",
+      imageUrl:
+        "https://www.ibm.com/cloud-computing/images/new-cloud/img/cloud.png"
+    },
+    {
+      id: "apim",
+      name: "Akeneo PIM",
+      type: "cloud",
+      imageUrl: "https://www.akeneo.com/wp-content/uploads/2015/12/akeneo.png"
+    },
+    {
+      id: "sapcar",
+      name: "SAP CAR",
+      type: "onpremise",
+      imageUrl:
+        "https://www.panorama-consulting.com/wp-content/uploads/2017/01/sap-2.png"
+    },
+    {
+      id: "sapisr",
+      name: "SAP IS Retail",
+      type: "onpremise",
+      imageUrl:
+        "https://www.panorama-consulting.com/wp-content/uploads/2017/01/sap-2.png"
+    },
     { id: "bv", name: "Bazaar Voice", type: "external" },
     { id: "cyberpay", name: "Cyberesource/Paypal", type: "external" },
     {
