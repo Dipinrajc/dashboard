@@ -259,7 +259,7 @@ function initDashBoard() {
         //"source-text-offset": 0,
         //"text-margin-y": -10,
         //"text-margin-x": -10,
-        "font-size": 10,
+        "font-size": 9,
         // color: "#0F0E0E",
         color: "#fff",
         "edge-text-rotation": "autorotate",
@@ -269,7 +269,7 @@ function initDashBoard() {
         "text-max-width": 200,
         "text-wrap": "ellipsis",
         "line-color": "data(color)", //getColor,
-        width: 18
+        width: 12
       })
       .selector("edge.dashed")
       .css({
@@ -335,6 +335,7 @@ function initDashBoard() {
       cy.center();
       cy.fit();
       resize();
+      updateBounds();
     }
   });
 
@@ -352,10 +353,10 @@ var cy = window.cy;
 function resize() {
   var win = $(window);
   console.log(win.height(), win.innerHeight());
-  $("#cy-container").height(win.innerHeight() - 130);
+  $("#cy-container").height(win.innerHeight() - 200);
   cy.resize();
 
-  cy.fit();
+  // /  cy.fit();
 }
 
 function getRandomInt(min, max) {
@@ -422,3 +423,10 @@ function getImage(imageUrl) {
   }
   return "url(" + imageUrl + ")";
 }
+
+var updateBounds = function() {
+  var bounds = cy.elements().boundingBox();
+  $("#cy").css("height", bounds.h + 50);
+  cy.center();
+  cy.resize();
+};
