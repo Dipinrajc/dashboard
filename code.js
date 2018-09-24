@@ -335,7 +335,6 @@ function initDashBoard() {
       cy.center();
       cy.fit();
       resize();
-      updateBounds();
     }
   });
 
@@ -349,13 +348,21 @@ function initDashBoard() {
 }
 
 var cy = window.cy;
+$(window).on("resize", function() {
+  resize();
+});
 
 function resize() {
-  var win = $(window);
-  console.log(win.height(), win.innerHeight());
-  $("#cy-container").height(win.innerHeight() - 200);
+  var bounds = cy.elements().boundingBox();
+  $("#cy").css("height", bounds.h + 10);
+  $("#cy").css("width", bounds.w);
+  cy.center();
   cy.resize();
 
+  /*  var win = $(window);
+  console.log(win.height(), win.innerHeight());
+  $("#cy").height(win.innerHeight() + 200);
+  cy.resize(); */
   // /  cy.fit();
 }
 
@@ -423,10 +430,3 @@ function getImage(imageUrl) {
   }
   return "url(" + imageUrl + ")";
 }
-
-var updateBounds = function() {
-  var bounds = cy.elements().boundingBox();
-  $("#cy").css("height", bounds.h + 50);
-  cy.center();
-  cy.resize();
-};
