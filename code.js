@@ -355,7 +355,8 @@ $(window).on("resize", function() {
 function resize() {
   var bounds = cy.elements().boundingBox();
   $("#cy").css("height", bounds.h + 10);
-  $("#cy").css("width", bounds.w);
+  //$("#cy").css("width", bounds.w);
+  //$("#cy").css("width", $(window).innerWidth());
   cy.center();
   cy.resize();
 
